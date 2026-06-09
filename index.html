@@ -332,6 +332,13 @@ body.menu-lock{overflow:hidden;}
 
     height:auto;
 }
+#mainNav {
+  position: relative;
+}
+
+.nav-inner {
+  position: relative;
+}
 .error-message{color:#d32f2f;font-size:12px;margin-top:6px;display:none;}
 .form-group.error input,.form-group.error select{border-color:#d32f2f;}
 .form-group.error .error-message{display:block;}
@@ -339,73 +346,75 @@ body.menu-lock{overflow:hidden;}
 @media (max-width: 960px) {
 
   .nav-links,
-  .nav-ctas {
-    display: none;
-  }
+.nav-ctas {
+  display: none;
+}
 
-  .nav-hamburger {
-    display: flex;
-  }
+.nav-hamburger {
+  display: flex;
+}
 
-  nav.menu-open .nav-ctas {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+nav.menu-open .nav-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
-    position: absolute;
-    top: 190px;
-    left: 16px;
-    right: 16px;
+  position: absolute;
+  top: 72px;
+  left: 16px;
+  right: 16px;
 
-    background: white;
+  background: #fff;
 
-    padding: 20px 20px 0;
+  padding: 20px;
+  padding-bottom: 12px;
 
-    border-radius: 24px 24px 0 0;
+  border-radius: 24px 24px 0 0;
 
-    box-shadow: 0 12px 32px rgba(0,0,0,.12);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.12);
 
-    z-index: 1000;
-    margin-top: -1px;
-  }
+  z-index: 1000;
+}
 
-  nav.menu-open .nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+nav.menu-open .nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-    position: absolute;
-    top: 140px;
-    left: 16px;
-    right: 16px;
+  position: absolute;
+  top: 190px;
+  left: 16px;
+  right: 16px;
 
-    background: white;
+  background: #fff;
 
-    padding: 20px;
+  padding: 12px 20px 20px;
 
-    border-radius: 0 0 24px 24px;
+  border-radius: 0 0 24px 24px;
 
-    box-shadow: 0 12px 32px rgba(0,0,0,.12);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.12);
 
-    z-index: 1000;
-  }
+  z-index: 1000;
+}
 
-  nav.menu-open .nav-links li {
-    width: 100%;
-  }
+nav.menu-open .nav-links li {
+  width: 100%;
+}
 
-  nav.menu-open .nav-links a {
-    display: block;
-    width: 100%;
-    padding: 12px 0;
-  }
+nav.menu-open .nav-links a {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+}
 
-  nav.menu-open .nav-ctas .btn-primary,
-  nav.menu-open .nav-ctas .btn-outline {
-    width: 100%;
-    text-align: center;
-    box-shadow: none;
-  }
+nav.menu-open .nav-ctas .btn-primary,
+nav.menu-open .nav-ctas .btn-outline {
+  width: 100%;
+  text-align: center;
+}
+
 
   .hero-inner {
     grid-template-columns: 1fr;
@@ -463,15 +472,24 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-off
 
 <nav id="mainNav">
   <div class="nav-inner">
+    
     <a href="#" class="logo-mark">
       <div class="logo-circle">
-  <img src="logo.jpeg" alt="My Chhota School Logo">
-</div>
+        <img src="logo.jpeg" alt="My Chhota School Logo">
+      </div>
       <div class="logo-text-wrap">
         <span class="logo-name">My Chhota School</span>
         <span class="logo-sub">Madinaguda · Hyderabad</span>
       </div>
     </a>
+
+    <!-- CTA FIRST -->
+    <div class="nav-ctas">
+      <a href="#contact" class="btn-outline">Book a Visit</a>
+      <a href="#admissions" class="btn-primary">Enroll Now</a>
+    </div>
+
+    <!-- LINKS SECOND -->
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#programs">Programs</a></li>
@@ -480,13 +498,19 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-off
       <li><a href="#admissions">Admissions</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="nav-ctas">
-      <a href="#contact" class="btn-outline">Book a Visit</a>
-      <a href="#admissions" class="btn-primary">Enroll Now</a>
-    </div>
-    <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
+
+    <button
+      class="nav-hamburger"
+      onclick="toggleMenu()"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
+
   </div>
 </nav>
 
