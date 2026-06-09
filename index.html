@@ -311,7 +311,19 @@
   .wa-float:hover { transform: scale(1.12); animation: none; box-shadow: 0 8px 32px rgba(37,211,102,0.6); }
   @keyframes waPulse { 0%, 100% { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.4); } 50% { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 14px rgba(37,211,102,0); } }
 
-  @media (max-width: 960px) {
+  
+.mobile-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden;transition:.3s ease;z-index:998;
+}
+.mobile-overlay.active{opacity:1;visibility:visible;}
+body.menu-lock{overflow:hidden;}
+.mobile-menu-panel{display:flex;align-items:center;gap:28px;}
+.error-message{color:#d32f2f;font-size:12px;margin-top:6px;display:none;}
+.form-group.error input,.form-group.error select{border-color:#d32f2f;}
+.form-group.error .error-message{display:block;}
+
+@media (max-width: 960px) {
     .nav-links, .nav-ctas { display: none; }
     .nav-hamburger { display: flex; }
     nav.menu-open .nav-links, nav.menu-open .nav-ctas { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: white; padding: 16px 28px; border-bottom: 1px solid rgba(0,0,0,0.06); gap: 16px; align-items: flex-start; box-shadow: 0 8px 28px rgba(0,0,0,0.1); z-index: 100; }
@@ -379,6 +391,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-off
     </button>
   </div>
 </nav>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <main id="main-content">
 <section id="hero">
@@ -654,53 +668,51 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-off
 
   <div class="admissions-form reveal">
 
-    <div class="form-title">
-      Contact Us
-    </div>
+<div class="form-title">Admissions Enquiry</div>
+<div class="form-sub">Fill in the details below and continue directly on WhatsApp.</div>
 
-    <div class="form-sub">
-      We'd love to help you learn more about My Chhota School.
-    </div>
+<form id="whatsappAdmissionForm" novalidate>
+<div class="form-group">
+<label for="parentName">Parent Name</label>
+<input type="text" id="parentName" required>
+<div class="error-message">Please enter parent name.</div>
+</div>
 
-    <div style="margin-bottom:20px;">
-      <strong>📞 Phone</strong><br>
-      +91 96421 30907<br>
-      +91 96421 30650
-    </div>
+<div class="form-group">
+<label for="phoneNumber">Phone Number</label>
+<input type="tel" id="phoneNumber" required>
+<div class="error-message">Enter a valid phone number.</div>
+</div>
 
-    <div style="margin-bottom:20px;">
-      <strong>✉️ Email</strong><br>
-      mychhotamadinaguda@gmail.com
-    </div>
+<div class="form-group">
+<label for="childName">Child Name</label>
+<input type="text" id="childName" required>
+<div class="error-message">Please enter child name.</div>
+</div>
 
-    <div style="margin-bottom:24px;">
-      <strong>📍 Location</strong><br>
-      VR Residency,<br>
-      Manjeera Pipeline Road,<br>
-      Madinaguda, Hyderabad
-    </div>
+<div class="form-group">
+<label for="childAge">Child Age</label>
+<input type="number" id="childAge" min="1" max="10" required>
+<div class="error-message">Please enter child age.</div>
+</div>
 
-    <div style="
-      background: rgba(209,71,11,0.08);
-      padding:18px;
-      border-radius:16px;
-      margin-bottom:24px;
-      text-align:center;
-    ">
-      <strong>⚡ Limited Seats Available</strong>
-    </div>
+<div class="form-group">
+<label for="programInterested">Program Interested In</label>
+<select id="programInterested" required>
+<option value="">Select Program</option>
+<option>Preschool</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Daycare</option>
+</select>
+<div class="error-message">Please select a program.</div>
+</div>
 
-    <a href="#contact"
-       class="btn-submit"
-       style="
-         display:block;
-         text-align:center;
-         text-decoration:none;
-       ">
-       Enroll Now
-    </a>
+<div style="background: rgba(209,71,11,0.08);padding:18px;border-radius:16px;margin-bottom:20px;text-align:center;">
+<strong>⚡ Limited Seats Available</strong>
+</div>
 
-  </div>
+<button type="submit" class="btn-submit">Continue on WhatsApp</button>
+</form>
+
+</div></div>
 
 </div>
 
@@ -809,28 +821,29 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-off
 </a>
 
 <script>
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); });
+const nav=document.getElementById('mainNav');
+const overlay=document.getElementById('mobileOverlay');
+const hamburger=document.querySelector('.nav-hamburger');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>10));
+function openMenu(){nav.classList.add('menu-open');overlay?.classList.add('active');document.body.classList.add('menu-lock');hamburger?.setAttribute('aria-expanded','true')}
+function closeMenu(){nav.classList.remove('menu-open');overlay?.classList.remove('active');document.body.classList.remove('menu-lock');hamburger?.setAttribute('aria-expanded','false')}
+function toggleMenu(){nav.classList.contains('menu-open')?closeMenu():openMenu()}
+overlay?.addEventListener('click',closeMenu);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+document.querySelectorAll('.nav-links a,.nav-ctas a').forEach(l=>l.addEventListener('click',closeMenu));
+const revealEls=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);obs.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>obs.observe(el));
+const form=document.getElementById('whatsappAdmissionForm');
+if(form){form.addEventListener('submit',e=>{e.preventDefault();const parentName=document.getElementById('parentName'),phoneNumber=document.getElementById('phoneNumber'),childName=document.getElementById('childName'),childAge=document.getElementById('childAge'),program=document.getElementById('programInterested');let valid=true;form.querySelectorAll('.form-group').forEach(g=>g.classList.remove('error'));const phoneRegex=/^[6-9]\d{9}$/;[parentName,phoneNumber,childName,childAge,program].forEach(f=>{if(!f.value.trim()){f.parentElement.classList.add('error');valid=false}});if(!phoneRegex.test(phoneNumber.value.trim())){phoneNumber.parentElement.classList.add('error');valid=false}if(!valid)return;const message=`Hello,
 
-  function toggleMenu() { nav.classList.toggle('menu-open'); }
-  document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => nav.classList.remove('menu-open')); });
+Parent Name: ${parentName.value}
+Phone Number: ${phoneNumber.value}
+Child Name: ${childName.value}
+Child Age: ${childAge.value}
+Program Interested In: ${program.value}
 
-  const revealEls = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 60);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => obs.observe(el));
-
-  function handleSubmit(btn) {
-    btn.textContent = '✓ Submitted! We\'ll contact you within 24 hours.';
-    btn.style.background = 'linear-gradient(135deg, #22C55E, #16A34A)';
-    btn.disabled = true;
-  }
+I would like to know more about admissions at My Chhota School.`;window.open('https://wa.me/919642130907?text='+encodeURIComponent(message),'_blank')})}
 </script>
 </body>
 </html>
