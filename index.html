@@ -318,29 +318,125 @@
 }
 .mobile-overlay.active{opacity:1;visibility:visible;}
 body.menu-lock{overflow:hidden;}
-.mobile-menu-panel{display:flex;align-items:center;gap:28px;}
+.mobile-menu-panel{
+    position:absolute;
+    top:72px;
+    left:16px;
+    right:16px;
+
+    background:#fff;
+    border-radius:0 0 24px 24px;
+
+    max-height:calc(100vh - 100px);
+    overflow-y:auto;
+
+    height:auto;
+}
 .error-message{color:#d32f2f;font-size:12px;margin-top:6px;display:none;}
 .form-group.error input,.form-group.error select{border-color:#d32f2f;}
 .form-group.error .error-message{display:block;}
 
 @media (max-width: 960px) {
-    .nav-links, .nav-ctas { display: none; }
-    .nav-hamburger { display: flex; }
-    nav.menu-open .nav-links, nav.menu-open .nav-ctas { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: white; padding: 16px 28px; border-bottom: 1px solid rgba(0,0,0,0.06); gap: 16px; align-items: flex-start; box-shadow: 0 8px 28px rgba(0,0,0,0.1); z-index: 100; }
-    nav.menu-open .nav-ctas { padding-top: 0; padding-bottom: 24px; top: auto; }
-    .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; }
-    .hero-visual { display: none; }
-    .about-grid, .trust-grid, .admissions-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-    .why-grid { grid-template-columns: 1fr 1fr; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .programs-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
-    .day-timeline::before { display: none; }
-    .day-item { display: block; }
-    .day-dot { display: none; }
-    .about-float-card { display: none; }
-    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  .nav-links,
+  .nav-ctas {
+    display: none;
   }
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  nav.menu-open .nav-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    position: absolute;
+    top: 72px;
+    left: 16px;
+    right: 16px;
+
+    background: white;
+
+    padding: 20px 20px 0;
+
+    border-radius: 24px 24px 0 0;
+
+    box-shadow: 0 12px 32px rgba(0,0,0,.12);
+
+    z-index: 1000;
+  }
+
+  nav.menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    position: absolute;
+    top: 140px;
+    left: 16px;
+    right: 16px;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 0 0 24px 24px;
+
+    box-shadow: 0 12px 32px rgba(0,0,0,.12);
+
+    z-index: 1000;
+  }
+
+  nav.menu-open .nav-links li {
+    width: 100%;
+  }
+
+  nav.menu-open .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  nav.menu-open .nav-ctas .btn-primary,
+  nav.menu-open .nav-ctas .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 20px;
+  }
+
+  .hero-visual { display: none; }
+
+  .about-grid,
+  .trust-grid,
+  .admissions-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .programs-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+
+  .day-timeline::before { display: none; }
+  .day-item { display: block; }
+  .day-dot { display: none; }
+  .about-float-card { display: none; }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
   @media (max-width: 560px) {
     section { padding: 60px 0; }
     .why-grid { grid-template-columns: 1fr; }
